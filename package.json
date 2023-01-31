@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "publishConfig": {
-    "registry": "http://10.0.222.18:8081/repository/npm-hosted/"
-  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

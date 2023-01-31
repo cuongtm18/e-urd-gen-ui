@@ -1,32 +1,33 @@
-const puppeteer = require('puppeteer');
+const puppeteer = require("puppeteer");
 
-let url = 'https://nshopvn.com/';
+let url = "http://doc.cs.etc.vn/login";
 (async () => {
   const browser = await puppeteer.launch({
-    headless: true,
-    args: ['--use-gl=egl'],
-    ignoreDefaultArgs: ['--disable-extensions']
+    headless: false,
+    args: ["--use-gl=egl"],
+    ignoreDefaultArgs: ["--disable-extensions"],
   });
   const page = await browser.newPage();
   await page.goto(url);
 
-  let electronicData = await page.evaluate(() => {
-    let products = [];
-    let product_wrapper = document.querySelectorAll('.product-wrapper');
-    product_wrapper.forEach((product) => {
-      let dataJson = {};
-      try {
-        dataJson.img = product.querySelector('.image > img').src;
-        dataJson.title = product.querySelector('.woocommerce-loop-product__title').innerText;
-        dataJson.price = product.querySelector('.price').innerText;
-      } catch (err) {
-        console.log(err)
-      }
-      products.push(dataJson);
-    });
-    return products;
-  });
+  try {
+    await page.type("#txtAccount", "cuongtm");
+    await page.type("#txtPassword", "Ctm@113995");
+    await page.click(".login100-form-btn");
+    await page.waitForNavigation();
+    await page.goto('http://doc.cs.etc.vn/mhs/lc/Haiquan/MHS_0010.%20Phan%20cong%20xu%20ly%20ho%20so%20xac%20dinh%20truoc%20ma%20so/index.htm')
 
-  console.log(electronicData);
-  await browser.close();
+    const elementHandle = await page.$(`#tocIFrame`);
+    const frame = await elementHandle.contentFrame();
+    const body = await frame.$('body')
+    const tocRoot = await body.$$('ul')
+    tocRoot.forEach(e => {
+      console.log(e)
+    })
+    console.log(tocRoot)
+  } catch (e) {
+    console.log(e);
+  }
+
+  // await browser.close();
 })();
