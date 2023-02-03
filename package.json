@@ -13,6 +13,6 @@
   "author": "cuongtm",
   "license": "MIT",
   "dependencies": {
-    "puppeteer": "^10.2.0"
+    "puppeteer": "^19.6.2"
   }
 }
